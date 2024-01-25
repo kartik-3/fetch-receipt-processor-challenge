@@ -1,0 +1,27 @@
+{
+  "name": "fetch-receipt-processor-challenge",
+  "version": "1.0.0",
+  "description": "Implementation of required APIs for Fetch challenge.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kartik-3/fetch-receipt-processor-challenge.git"
+  },
+  "author": "kartik-3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kartik-3/fetch-receipt-processor-challenge/issues"
+  },
+  "homepage": "https://github.com/kartik-3/fetch-receipt-processor-challenge#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
