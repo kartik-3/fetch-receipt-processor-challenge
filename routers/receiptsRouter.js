@@ -1,7 +1,8 @@
 /**
- * This is our main router. It has two routes -
+ * This is our main router. It has 3 routes -
  * /receipts/{id}/points (GET) - Get endpoint that looks up the receipt by the ID and returns an object specifying the points awarded.
  * /receipts/process (POST) - Post endpoint. First, request body is validated. Then points are calculated and a UUID is generated and both are stored in the in-memory database. The UUID is returned to the user.
+ * /receipts/points (GET) - Get endpoint that returns all receipts with corresponding points in the database.
  */
 const { Router } = require("express");
 const receiptsRouter = Router();
@@ -12,6 +13,7 @@ let receiptPoints = {};
 
 async function main() {
   try {
+    /* GET request to get points for a given ID */
     receiptsRouter.get("/:id/points", async (req, res) => {
       const id = req.params.id;
       /* Check if ID is not present in the database */
@@ -22,6 +24,7 @@ async function main() {
       return res.status(200).send({ points: receiptPoints[id] });
     });
 
+    /* POST request to post receipts and receive a receipt ID in return */
     receiptsRouter.post("/process", async (req, res) => {
       /* Check if the request body is valid */
       const validBody = validateRequestBody(req);
@@ -37,14 +40,21 @@ async function main() {
 
       return res.status(200).send({ id: id });
     });
+
+    /* Additional GET request to view all added receipts */
+    receiptsRouter.get("/points", async (req, res) => {
+      /* Return all receiptId-point pairs */
+      return res.status(200).send(receiptPoints);
+    });
   } catch (e) {
     console.error(e);
   }
 }
 
-/* Function to validate the request body has all required fields.
-Please read the corresponding message to understand what is being validated.
-*/
+/**
+ * Function to validate the request body has all required fields.
+ * Please read the corresponding message to understand what is being validated.
+ */
 function validateRequestBody(req) {
   let status = 200,
     msg = "";
